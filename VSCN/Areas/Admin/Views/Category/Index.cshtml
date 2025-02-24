@@ -1,0 +1,430 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .wrap-text {
+        white-space: normal;
+        /* Cho phép xuống dòng */
+        word-break: break-word;
+        /* Ngắt từ khi cần thiết */
+        max-width: 250px;
+        /* Giới hạn chiều rộng cột */
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        /* Tạo thanh cuộn ngang */
+    }
+
+    .table td,
+    .table th {
+        vertical-align: middle;
+        /* Canh giữa nội dung */
+        padding: 8px;
+        /* Thêm khoảng cách giữa các ô */
+    }
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">Danh Sách Danh Mục </h5>
+            </div>
+            <div class="card-body">
+                <div class="row p-2">
+
+                    <div class="col-md-3">
+                        @Html.DropDownList("Pagesize",
+                                 new SelectList(ViewBag.Pagesize, "ID", "ID"),
+                                 "Chọn số bản ghi", // This will set the default value
+                                 new { @class = "form-control" }
+                                 )
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>TT</th>
+
+                                <th>Tên danh mục</th>
+                                <th>Tên đại diện </th>
+
+                                <th>Trạng thái</th>
+
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tbData"></tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="100" id="pages"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary" id="textEdit">Thêm mới danh mục </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Name -->
+                    <div class="col-md-12 p-2">
+                        <div class="input-group">
+                            <label class="input-group-text" for="name">Tên Danh Mục</label>
+                            <input type="text" class="form-control" id="name" placeholder="Nhập tên danh mục" />
+                            <input type="text" hidden id="id" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 p-2">
+                        <div class="input-group">
+                            <label class="input-group-text" for="slug">Slug</label>
+                            <input type="text" class="form-control bg-white" id="slug" placeholder="Slug"
+                                   readonly />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 p-2">
+                        <div class="input-group">
+                            <label class="input-group-text" for="parentId">Danh Mục Cha</label>
+                            @Html.DropDownList("parentId",
+                                     new SelectList(ViewBag.ListCategory, "Id", "Name"),
+                                     "- Chọn Danh Mục Cha -",
+                                     new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <!-- Image -->
+                    <div hidden class="col-md-12 p-2">
+                        <div class="input-group">
+                            <label class="input-group-text" hidden for="img">Ảnh</label>
+                            <input type="text" class="form-control" id="img" placeholder="Nhập URL ảnh" />
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-md-12 p-2">
+                        <div class="input-group">
+                            <label class="input-group-text" for="description">Mô tả</label>
+                            <textarea class="form-control" id="description" placeholder="Nhập mô tả"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Active -->
+                    <div class="col-md-12 p-2">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="active" />
+                            <label class="form-check-label" for="active">Hoạt Động</label>
+                        </div>
+                    </div>
+
+               
+                    <!-- Buttons -->
+                    <div class="form-group mt-3 text-end">
+                        <button type="button" id="create" class="btn btn-primary">
+                            Thêm mới
+                        </button>
+                        <a type="button" class="btn btn-secondary" href="/Admin/Category/Index">Quay lại</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+
+</div>
+
+@section scripts {
+    <script>
+        var category = {
+            init: function () {
+                category.search(1);
+                $("#search, #Pagesize").change(function () {
+                    category.search(1);
+                });
+
+                // Update slug when name field changes in the create modal
+                $("#name").on("input", function () {
+                    var name = $(this).val();
+                    var slug = category.generateSlug(name);
+                    $("#slug").val(slug);
+                });
+
+
+
+                $("#create").click(function () {
+                    var id = $('#id').val();
+                    if(id){
+                        category.save();
+                    }
+                    else{
+                        category.create();
+                    }
+
+
+                });
+
+
+
+
+                 $("#orderBy").change(function () {
+                    category.onChangeOrderBy();
+                 });
+            },
+
+            // Function to generate slug based on the name field
+            generateSlug: function (name) {
+                return name
+                    .toLowerCase() // Chuyển tất cả thành chữ thường
+                    .normalize('NFD') // Chuẩn hóa Unicode
+                    .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu Unicode
+                    .replace(/đ/g, 'd') // Thay đ thành d
+                    .replace(/Đ/g, 'd') // Thay Đ thành d
+                    .replace(/\s+/g, '-') // Thay khoảng trắng bằng dấu gạch ngang
+                    .replace(/[^\w\-]+/g, '') // Loại bỏ ký tự không hợp lệ
+                    .replace(/\-\-+/g, '-') // Xóa dấu gạch ngang liên tiếp
+                    .trim(); // Loại bỏ khoảng trắng ở đầu và cuối chuỗi
+            },
+
+
+            search: function (index) {
+                var name = $("#search").val();
+                var size = $("#Pagesize").val();
+                var form = new FormData();
+                form.append("name", name);
+                form.append("size", size);
+                form.append("index", index);
+                $("#loading").show();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    data: form,
+                    url: '/Admin/category/ShowList/',
+                    success: function (res) {
+                        var html = "";
+                        $.each(res.data, function (index, a) {
+
+
+                            html += "<tr>";
+                            html += "<td>" + a.id + "</td>";
+                            html += "<td><a href='javascript:void(0)' onclick='category.getDanhMuc(" + a.id + ")'>"+a.name+"</a></td>";
+                            html += "<td>" + a.slug + "</td>";
+
+                            html += "<td>" + (a.active ? "<i style='color:green' class='fa-solid fa-check'></i>" : "<i style='color:red' class='fa-solid fa-xmark'></i>") + "</td>";
+                            // html += "<td>" + (a.isShow ? "<i style='color:blue'  class='fa-solid fa-eye mr-1'></i>" : "<i style='color:red' class='fa-solid fa-eye-slash'></i>");
+
+                            // html += "<a href='javascript:void(0)' onclick='category.edit(" + a.id + ")'><i class='fa fa-edit mr-1'></i></a>";
+                            html += "<a href='javascript:void(0)' onclick='category.delete(" + a.id + ")'><i class='fa fa-trash' style='color:red'></i></a></td>";
+                            html += "</tr>";
+                                 $.each(a.subCategory, function (i, b) {
+
+
+                                    html += "<tr>";
+                                    html += "<td>" + b.id + "</td>";
+                                    html += "<td><a href='javascript:void(0)' onclick='category.getDanhMuc(" + b.id + ")'>---"+b.name+"</a></td>";
+                                    html += "<td>" + b.slug + "</td>";
+
+                                    html += "<td>" + (b.active ? "<i style='color:green' class='fa-solid fa-check'></i>" : "<i style='color:red' class='fa-solid fa-xmark'></i>") + "</td>";
+                                    html += "<td>" + (b.isShow ? "<i style='color:blue'  class='fa-solid fa-eye mr-1'></i>" : "<i style='color:red' class='fa-solid fa-eye-slash'></i>");
+
+                                    html += "<a href='javascript:void(0)' onclick='category.delete(" + b.id + ")'><i class='fa fa-trash' style='color:red'></i></a></td>";
+                                    html += "</tr>";
+
+                                 });
+
+                        });
+                        $("#tbData").html(html);
+                        $("#pages").html(res.page);
+                        $("#loading").hide();
+                    },
+                });
+            },
+
+
+            delete: function (id) {
+                // Show a confirmation dialog
+                if (confirm("Bạn có chắc chắn muốn xóa danh mục này không?")) {
+                    var form = new FormData();
+                    form.append("id", id);
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        data: form,
+                        url: '/Admin/Category/Delete/',
+                        success: function (res) {
+                            if (res.mess) {
+                                alert("Xóa thành công!");
+                                category.search(1);
+                            } else {
+                                alert("Xóa thất bại: " + res.message);
+                            }
+                        },
+                        error: function () {
+                            alert("Đã xảy ra lỗi trong khi xóa danh mục.");
+                        }
+                    });
+                }
+            },
+
+            create: function () {
+                var name = $('#name').val();
+                var slug = $('#slug').val();
+                var parentId = $('#parentId').val();
+                var img = $('#img').val();
+                var description = $('#description').val();
+                var active = $('#active').is(':checked');
+                var isShow = $('#isShow').is(':checked');
+
+                var formData = new FormData();
+                formData.append('name', name);
+                formData.append('slug', slug);
+                formData.append('parentId', parentId);
+                formData.append('img', img);
+                formData.append('description', description);
+                formData.append('active', active); // Append active status
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    url: '/Admin/Category/Create/',
+                    success: function (res) {
+                        _layout.showtoast(res.mess);
+                        $('#new').modal('hide'); // Hide the modal on success
+                        category.search(1);
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi khi tạo sản phẩm.");
+                    }
+                });
+            },
+
+            getDanhMuc: function (id) {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'JSON',
+                    url: '/Admin/category/getDanhmuc/' + id,
+                    success: function (res) {
+                        $("#id").val(res.data.id);
+                        $("#name").val(res.data.name);
+                        $("#slug").val(res.data.slug);
+                        $("#parentId").val(res.data.parentId);
+                        $("#img").val(res.data.avatar);
+                        $("#description").val(res.data.summary);
+                        $("#active").prop("checked", res.data.active);
+                        $("#isShow").prop("checked", res.data.isShow);
+                        $("#textEdit").text("Cập nhật danh mục");
+                        $("#create").text("Cập nhật");
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi khi lấy thông tin danh mục.");
+                    }
+                });
+            },
+
+            save: function () {
+                var id = $("#id").val();
+                var name = $("#name").val();
+                var parentId = $("#parentId").val();
+                var slug = $("#slug").val();
+                var img = $("#img").val();
+                var description = $("#description").val();
+                var active = $("#active").is(":checked");
+                var isShow = $("#isShow").is(":checked");
+
+                var form = new FormData();
+                form.append("id", id);
+                form.append("name", name);
+                form.append("parentId", parentId);
+                form.append("img", img);
+                form.append("description", description);
+                form.append("active", active);
+                form.append("isShow", isShow);
+                form.append("slug", slug);
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'Json',
+                    contentType: false,
+                    processData: false,
+                    data: form,
+                    url: '/Admin/category/Update/',
+                    success: function (res) {
+                        _layout.showtoast(res.mess);
+                        $("#textEdit").text("Thêm mới danh mục");
+                        $("#create").text("Thêm mới ");
+                        $("#id").val('');
+                        $("#name").val('');
+                        $("#parentId").val('');
+                        $("#img").val('');
+                        $("#description").val('');
+                        $("#slug").val('');
+
+                        $("#active").prop('checked', false);
+                        $("#isShow").prop('checked', false);
+                        category.search(1);
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi khi cập nhật danh mục.");
+                    }
+                });
+            },
+
+            // Add the edit function
+            edit: function (id) {
+                $('#update').modal('show'); // Show the update modal
+                category.getDanhmuc(id); // Load category data into the modal
+            },
+
+            onChangeOrderBy: function (id) {
+                var orderBy = $("input[data-id='" + id + "']").val(); // Lấy giá trị orderBy từ input có data-id = id
+                var form = new FormData();
+                form.append("id", id); // Gửi id của danh mục
+                form.append("orderBy", orderBy); // Gửi giá trị orderBy
+
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        data: form,
+                        url: '/Admin/Category/OnChange/', // URL cập nhật thứ tự
+                        success: function (res) {
+                            if (res.mess) {
+                                _layout.showtoast("Cập nhật thành công ");
+                                category.search(1); // Tải lại danh sách sau khi thay đổi thứ tự
+                            } else {
+                                alert("Cập nhật thất bại: " + res.message);
+                            }
+                        },
+                    });
+                },
+            };
+
+            category.init();
+            function goto(i) {
+                category.search(i);
+            }
+    </script>
+}

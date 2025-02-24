@@ -63,5 +63,38 @@ namespace VSCN.Models.DAO
             return (total, query);
             
         }
+        public (int, List<ProductVIEW>) Search(string name = "", int categoryId = 0, int index = 1, int size = 10)
+        {
+            if (string.IsNullOrEmpty(name)) name = "";
+
+            var query = (from a in context.Products
+                         join b in context.Categories on a.CategoryId equals b.Id
+                         where a.Name.Contains(name) && a.Trash == false
+                         select new ProductVIEW
+                         {
+                             Id = a.Id,
+                             CategoryId = a.CategoryId ?? 0, // Nếu có ParentId tương ứng với danh mục cha
+                             Name = a.Name,
+                             Slug = a.Slug, // Nếu có trường Slug trong bảng Categories
+                             TypeArticle = a.TypeArticle, // Nếu có trường TypeArticle
+                             Content = a.Content, // Nếu có trường Content
+                             Avatar = a.Avatar,
+                             Trash = a.Trash ?? false,
+                             Active = a.Active ?? true
+                         });
+            if (categoryId != 0)
+            {
+                query = query.Where(x => x.CategoryId == categoryId);
+
+            }
+            int total = query.Count();
+
+            if (size > 0 && index > 0)
+            {
+                query = query.Skip((index - 1) * size).Take(size);
+            }
+
+            return (total, query.ToList());
+        }
     }
 }

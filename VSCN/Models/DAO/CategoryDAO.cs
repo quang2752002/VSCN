@@ -86,14 +86,14 @@ namespace VSCN.Models.DAO
                                             where sub.ParentId == a.Id && sub.Trash == false
                                             select new CategoryVIEW
                                             {
-                                                Id = a.Id,
-                                                Name = a.Name,
-                                                Slug = a.Slug,
-                                                ParentId = a.ParentId ?? 0,
-                                                Summary = a.Summary,
-                                                Avatar = a.Avatar,
-                                                Trash = a.Trash ?? false,
-                                                Active = a.Active ?? false
+                                                Id = sub.Id,
+                                                Name = sub.Name,
+                                                Slug = sub.Slug,
+                                                ParentId = sub.ParentId ?? 0,
+                                                Summary = sub.Summary,
+                                                Avatar = sub.Avatar,
+                                                Trash = sub.Trash ?? false,
+                                                Active = sub.Active ?? false
                                             }).ToList()
                          }).ToList();
 
@@ -130,6 +130,43 @@ namespace VSCN.Models.DAO
                 var query = context.Categories.Where(x => x.Slug == slug).FirstOrDefault();
                 return query != null;
             }
+        }
+        public List<CategoryVIEW> getAll()
+        {
+            // Retrieve the categories
+            var query = (from a in context.Categories
+                         where a.Trash == false && a.ParentId == null
+                         select new CategoryVIEW
+                         {
+                             Id = a.Id,
+                             Name = a.Name,
+                             Slug = a.Slug,
+                             ParentId = a.ParentId??0,
+                             SubCategory = (from sub in context.Categories
+                                            where sub.ParentId == a.Id && sub.Trash == false
+                                            select new CategoryVIEW
+                                            {
+                                                Id = sub.Id,
+                                                Name = sub.Name,
+                                                Slug = sub.Slug,
+                                            }).ToList()
+                         }).ToList();
+
+            // Flatten the list with parent and subcategories
+            List<CategoryVIEW> categoryList = new List<CategoryVIEW>();
+
+            foreach (var category in query)
+            {
+                categoryList.Add(category); // Add parent category
+
+                foreach (var subCategory in category.SubCategory)
+                {
+                    subCategory.Name = "-- " + subCategory.Name; // Add '--' to subcategory name
+                    categoryList.Add(subCategory); // Add subcategory
+                }
+            }
+
+            return categoryList;
         }
     }
 }
