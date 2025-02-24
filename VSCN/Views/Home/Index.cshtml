@@ -1,0 +1,287 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    .product-card {
+       
+        border-radius: 10px;
+        padding: 15px;
+        text-decoration:none;
+    }
+
+    .product-image {
+        width: 100%; /* Đảm bảo ảnh rộng bằng container */
+        height: 200px; /* Đặt chiều cao cố định */
+        object-fit: cover; /* Cắt ảnh để vừa khung */
+        border-radius: 10px;
+        
+    }
+
+    .product-title {
+        font-size: 22px; /* Tăng kích thước chữ */
+        font-weight: bold;
+        margin-top: 10px;
+        color:black;
+    }
+
+    .service-card {
+        padding: 20px;
+    }
+
+    .service-image {
+        width: 80%; /* Đảm bảo ảnh rộng bằng container */
+        max-width: 150px; /* Giới hạn kích thước tối đa */
+        height: auto; /* Giữ tỷ lệ ảnh */
+        display: block;
+        margin: 0 auto; /* Căn giữa ảnh */
+    }
+
+    .service-title {
+        font-size: 28px; /* Tăng kích thước chữ */
+        font-weight: bold; /* Làm chữ đậm hơn */
+        color: #2596be;
+        margin-top: 15px;
+    }
+
+    .service-description {
+        font-size: 16px;
+        line-height: 1.6; /* Giúp văn bản dễ đọc hơn */
+        color: #333;
+    }
+
+
+</style>
+<div class="row">
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"> </button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner" id="getSlide">
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true" style="color:white"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <!-- Cột chứa ảnh -->
+    <div class="col-md-6">
+        <img src="https://dichvuvesinhkdc.com/wp-content/uploads/2023/10/Giat_sofa_ghe_tai_van_phong_cong_ty_Mitsui_intro.jpg" alt="Alternate Text" class="img-fluid" />
+    </div>
+    <!-- Cột chứa nội dung giới thiệu -->
+    <div class="col-md-6" id="getIntro">
+        <!-- Nội dung giới thiệu sẽ được chèn vào đây -->
+    </div>
+</div>
+
+<div class="row mt-5">
+    <h1 style="color:orange;font-size:45px;" class="text-center mt-5">CÁC DỊCH VỤ VỆ SINH CÔNG NGHIỆP</h1>
+    <span class="text-center">Luôn nỗ lực mang đến sự hài lòng cho quý khách hàng trong từng gói dịch vụ</span>
+    <img src="~/uploads/title-tail.png" class="img-fluid d-block mx-auto" style="max-width: 200px;" />
+
+</div>
+<div class="row" id="getProduct" >
+
+</div>
+<div class="row mt-5">
+    <div class="row">
+        <h1 style="color:orange;font-size:45px;" class="text-center mt-5">CHÚNG TÔI GIÚP GÌ CHO QUÝ KHÁCH HÀNG?</h1>
+        <span class="text-center">4 giá trị cốt lõi chúng tôi mang đến cho quý khách hàng</span>
+        <img src="~/uploads/title-tail.png" class="img-fluid d-block mx-auto" style="max-width: 200px;" />
+    </div>
+    <div class="row">
+       
+            <div class="col-md-3 text-center service-card">
+                <img src="~/uploads/img1.png" alt="Product Image" class="service-image" />
+                <h2 class="service-title">TIẾT KIỆM THỜI GIAN</h2>
+                <p class="service-description">
+                    Dịch vụ vệ sinh xây dựng với tiêu chí tiết kiệm thời gian dọn dẹp tối đa cho tất cả những khách hàng Việt.
+                    Chúng tôi sẽ thay bạn xử lý toàn bộ những vết bẩn cùng sự bừa bộn, nhằm trả lại không gian sống trong lành, sạch đẹp
+                    trong thời gian ngắn nhất. Giúp quý khách hàng có nhiều thời gian hơn để chăm sóc bản thân và gia đình mình.
+                </p>
+            </div>
+            <div class="col-md-3 text-center service-card">
+                <img src="~/uploads/img2.png" alt="Product Image" class="service-image" />
+                <h2 class="service-title">AN TÂM & CAM KẾT</h2>
+                <p class="service-description">
+                    AN TÂM: KDC có đội ngũ nhân viên với lý lịch rõ ràng, được tuyển chọn khắt khe qua quá trình đào tạo chuyên nghiệp
+                    về chuyên môn và đạo đức.
+                    CAM KẾT: KDC luôn làm việc chuyên nghiệp, cam kết bằng hợp đồng, hoàn thành đúng tiêu chí và tiến độ đã thỏa thuận 
+                    với khách hàng.
+                </p>
+            </div>
+             <div class="col-md-3 text-center service-card">
+                <img src="~/uploads/img3.png" alt="Product Image" class="service-image" />
+                <h2 class="service-title">DỊCH VỤ CHUYÊN NGHIỆP</h2>
+                <p class="service-description">
+                    Trong suốt quá trình hình thành phát triển, KDC được tin tưởng bởi chất lượng dịch vụ hàng đầu.
+                    Chúng tôi luôn nỗ lực đưa ra những giải pháp tối ưu nhất nhằm mang lại sự hài lòng nhất cho mọi quý khách hàng.
+                </p>
+            </div>
+            <div class="col-md-3 text-center service-card">
+                <img src="~/uploads/img4.png" alt="Product Image" class="service-image" />
+                <h2 class="service-title">HẬU MÃI CHU ĐÁO</h2>
+                <p class="service-description">
+                    Sau khi sử dụng dịch vụ vệ sinh của KDC, KDC sẽ đồng hành cùng quý khách hàng xuyên suốt định kỳ. Cùng với đó
+                    là những chính sách ưu đãi cực kỳ hấp dẫn đảm bảo làm hài lòng kể cả những khách hàng khó tính nhất.
+                </p>
+            </div>
+       
+    </div>
+
+</div>
+
+
+<div class="row mt-5">
+    <div class="row">
+        <h1 style="color:orange;font-size:45px;" class="text-center mt-5">BẢNG GIÁ CÁC DỊCH VỤ VỆ SINH </h1>
+        <img src="~/uploads/title-tail.png" class="img-fluid d-block mx-auto" style="max-width: 200px;" />
+    </div>
+    <div class="row" id="getPriceList"></div>
+</div>
+<div class="row mt-5">
+    <div class="row">
+        <h1 style="color:orange;font-size:45px;" class="text-center mt-5">MỘT SỐ CÔNG TRÌNH TIÊU BIỂU </h1>
+        <img src="~/uploads/title-tail.png" class="img-fluid d-block mx-auto" style="max-width: 200px;" />
+    </div>
+</div>
+
+@section scripts {
+
+
+    <script>
+        var currentIndex = 1; // Initialize starting index to 1 (for page 1)
+
+        var home = {
+            init: function () {
+               
+                home.getSlide();
+                home.getConfig();
+                home.getProduct();
+                home.getPriceList();
+            },
+
+
+            getSlide: function () {
+                $.ajax({
+                    url: "/Information/getInfor/",
+                    method: "GET",
+                    dataType: "json",
+                    success: function (res) {
+                        var html = "";
+                        $.each(res.data, function (index, a) {
+                            html += `
+                                   <a class="carousel-item ${index === 0 ? "active" : ""}" data-bs-interval="3000"  href='#'>
+                                           <img src="https://dichvuvesinhkdc.com/wp-content/uploads/2023/10/Ve_sinh_cong_nghiep_Thanh_Tri.jpg" class="d-block w-100" />
+
+                                    </a>`;
+                        });
+                        $("#getSlide").html(html);
+                    },
+                });
+            },
+            getConfig: function () {
+                $.ajax({
+                    url: "/Information/getInfor/",
+                    method: "GET",
+                    dataType: "json",
+                    success: function (res) {
+                        $("#getIntro").text(res.intro);
+                    },
+                });
+            },
+            getProduct: function () {
+                $.ajax({
+                    url: "/Product/ShowList/",
+                    method: "GET",
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res.data); 
+                        if (res.data) {
+                            var html = "";
+                            $.each(res.data, function (index, product) {
+                                html += "<a class='col-md-3 p-4  product-card text-center' href='/Product/Detail/"+product.slug+"'>";
+                                html += "<img src='" + product.avatar + "' alt='Product Image' class='product-image' />";
+                                html += "<h2 class='product-title'>" + product.name + "</h2>";
+                                html += "</a>";
+
+
+                            });
+                            $("#getProduct").html(html); // Populate the content div with generated HTML
+                        } else {
+                            $("#getProduct").html("<p>No articles found.</p>");
+                        }
+                    },
+                    error: function (err) {
+                        console.error("Error fetching articles:", err);
+                        $("#getProduct").html("<p>Failed to load articles.</p>");
+                    },
+                });
+            },
+            getPriceList: function () {
+                $.ajax({
+                    url: "/Product/ShowList/",
+                    method: "GET",
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res.data);
+                        if (res.data) {
+                            var html = "";
+                            $.each(res.data, function (index, product) {
+                                html += "<a class='col-md-3 d-flex align-items-center p-4' style='display: flex; align-items: center; gap: 10px; text-decoration :none' href='/Product/Detail/" + product.slug + "'>";
+                                html += "<img src='" + product.avatar + "' alt='Product Image' style='width: 100px; height: 100px; object-fit: cover; border-radius: 8px;' />";
+                                html += "<h2 style='font-size: 18px; font-weight: bold; color: #333; margin: 0;'>Bảng giá " + product.name + "</h2>";
+                                html += "</a>";
+
+
+
+
+                            });
+                            $("#getPriceList").html(html); // Populate the content div with generated HTML
+                        } else {
+                            $("#getPriceList").html("<p>No articles found.</p>");
+                        }
+                    },
+                    error: function (err) {
+                        console.error("Error fetching articles:", err);
+                        $("#getPriceList").html("<p>Failed to load articles.</p>");
+                    },
+                });
+            },
+
+
+
+        };
+
+        home.init();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        var breakpoint = {
+            sm: 576,
+            md: 768,
+            lg: 992,
+            xl: 1200
+        };
+
+        // slick slider
+
+    </script>
+}

@@ -1,0 +1,120 @@
+﻿﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+<div class="row">
+    <div class="col-lg-6 d-none d-lg-block bg-login-image">
+        <img src="#" id="getLogo" class="p-5" style="width:400px; height:auto" alt="" />
+    </div>
+    <div class="col-lg-6">
+        <div class="p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Đăng Nhập</h1>
+            </div>
+            <form class="user">
+                <div class="form-group">
+                    <input type="email" class="form-control form-control-user"
+                           id="username" aria-describedby="emailHelp" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user"
+                           id="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">
+                            Remember Me
+                        </label>
+                    </div>
+                </div>
+                <button type="button" id="login" class="btn btn-primary btn-user btn-block">
+                    Login
+                </button>
+
+                <hr>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        var login = {
+            init: function () {
+                login.getLogo();
+                login.checkRememberMe(); // Kiểm tra và điền thông tin đăng nhập nếu có
+
+                $("#login").click(function () {
+                    login.dangnhap();
+                });
+            },
+
+            dangnhap: function () {
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var rememberMe = $("#customCheck").is(":checked"); // Kiểm tra "Remember Me"
+
+                var form = new FormData();
+                form.append("username", username);
+                form.append("password", password);
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'Json',
+                    contentType: false,
+                    processData: false,
+                    data: form,
+                    url: '/Login/Dangnhap/',
+                    success: function (res) {
+                        if (res.status == true) {
+                            if (rememberMe) {
+                                // Lưu username và password vào localStorage nếu chọn "Remember Me"
+                                localStorage.setItem("username", username);
+                                localStorage.setItem("password", password);
+                            } else {
+                                // Nếu không chọn "Remember Me", xóa username và password khỏi localStorage
+                                localStorage.removeItem("username");
+                                localStorage.removeItem("password");
+                            }
+
+                            // Chuyển hướng đến trang Admin
+                            window.location.href = "/" + res.router + "/Article";
+                        } else {
+                            alert(res.mess);
+                        }
+                    },
+                });
+            },
+
+            checkRememberMe: function () {
+                var savedUsername = localStorage.getItem("username");
+                var savedPassword = localStorage.getItem("password");
+
+                if (savedUsername && savedPassword) {
+                    $("#username").val(savedUsername);
+                    $("#password").val(savedPassword);
+                    $("#customCheck").prop("checked", true); // Giữ trạng thái "Remember Me"
+                }
+            },
+
+            getLogo: function () {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'Json',
+                    contentType: false,
+                    processData: false,
+                    url: '/Config/getFooter/',
+                    success: function (res) {
+                        $("#getLogo").attr("src", res.logo);
+                    },
+                });
+            }
+        };
+
+        login.init();
+
+
+    </script>
+}

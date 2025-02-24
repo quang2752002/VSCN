@@ -1,0 +1,277 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+}
+
+.main {
+    background-color: #eeeeee;
+    padding: 0 !important; /* Xóa padding từ container */
+}
+
+.header {
+    width: 100%;
+    height: auto; /* Để hình ảnh header tự động co giãn */
+    overflow: hidden;
+}
+
+.header-img-link {
+    width: 100%;
+    height: 20%;
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+}
+
+/* Background Title Styles */
+.bg-title {
+    background-image: url(images/bg-title.jpg);
+    background-size: 80% 100%; /* Chiều rộng 80%, chiều cao 100% */
+    background-repeat: no-repeat; /* Tránh lặp lại hình ảnh */
+    color: white !important;
+    font-size: 1.6rem;
+    border-bottom: none !important;
+}
+
+.bg-title-mid {
+    background-image: url(images/bg-title-mid.jpg);
+    background-size: 40% 100%;
+    background-repeat: no-repeat;
+    color: white !important;
+    font-size: 1.6rem;
+    border-bottom: 1px #003d79 solid;
+    padding: 10px;
+}
+
+.nav-btn {
+    background-color: white;
+    padding: none !important;
+    margin: none;
+}
+
+.nav-link-text {
+    font-size: 2rem !important;
+    color: white !important;
+    font-weight: 5000 !important;
+    padding-right: 50px !important;
+}
+/* Footer Styles */
+.footer {
+    border-top: solid #007bff;
+    align-items: center;
+    padding: 1rem;
+}
+
+.footer-img {
+    width: 200px;
+    padding: 2rem;
+    text-align: center !important;
+}
+
+.footer-title {
+    color: var(--red-color);
+    padding-top: 2rem;
+}
+
+.footer-text {
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.footer-end {
+    background-color: #2383c0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-end-text {
+    color: var(--white-color);
+    text-align: center;
+    font-size: 15px;
+    font-weight: 100;
+}
+
+/* Slider Styles */
+#slick {
+    display: none;
+}
+
+    #slick.slick-initialized {
+        display: block;
+        height: 260px !important;
+    }
+
+    #slick .slick-list {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+
+    #slick .slick-slide {
+        padding: 0 15px;
+    }
+
+        #slick .slick-slide img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+        }
+
+    #slick .slick-arrow {
+        position: absolute;
+        width: 30px;
+        height: 49px;
+        top: 43%;
+        background-color: transparent;
+        border: none;
+        z-index: 100;
+        transform: translateY(-50%);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    #slick .slick-prev {
+        left: -15px;
+        background-image: url('images/left-arrow.png');
+    }
+
+    #slick .slick-next {
+        right: -15px;
+        background-image: url('images/arrow-right.png');
+    }
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .bg-title-mid {
+        background-image: url(images/bg-title-mid.jpg);
+        background-size: 70% 100%;
+        background-repeat: no-repeat;
+        color: white !important;
+        font-size: 1.6rem;
+        border-bottom: 1px #003d79 solid;
+        padding: 10px;
+    }
+
+    .footer-img {
+        width: 150px;
+    }
+
+    .footer-text {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .bg-title {
+        background-size: contain;
+        font-size: 1.4rem;
+        padding: 10px; /* Tạo khoảng cách bên trong */
+    }
+
+    .header-img-link {
+        height: auto;
+    }
+
+    #slick {
+        height: auto !important;
+    }
+
+        #slick .slick-slide img {
+            object-fit: contain;
+        }
+}
+
+
+@media (max-width: 576px) {
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-img {
+        padding: 1rem 0;
+    }
+}
+
+.carousel-item {
+    position: relative; /* Đặt position để các phần tử con định vị tương đối */
+}
+
+    .carousel-item img {
+        width: 100%;
+        height: 50%;
+        object-fit: cover;
+    }
+
+.carousel-item {
+    position: relative; /* Đặt position để các phần tử con định vị tương đối */
+}
+
+    .carousel-item img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+    }
+
+.slide-text {
+    position: absolute; /* Văn bản sẽ nằm đè lên ảnh */
+    bottom: 0; /* Căn văn bản xuống chân ảnh */
+    left: 0; /* Bắt đầu từ cạnh trái */
+    width: 100%; /* Chiếm toàn bộ chiều ngang của ảnh */
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6); /* Tạo nền tối mờ */
+    padding: 10px 10px; /* Tạo khoảng cách giữa nội dung và các cạnh */
+    z-index: 10; /* Đảm bảo văn bản luôn nằm trên ảnh */
+    text-decoration: none;
+}
+
+    .slide-text h3 {
+        font-size: 2rem;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .slide-text p {
+        font-size: 1.6rem;
+        margin: 0;
+    }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .slide-text h5 {
+        font-size: 1.2rem;
+    }
+
+    .slide-text p {
+        font-size: 0.9rem;
+    }
+}
+
+.card-content {
+    font-size: 1.8rem;
+    text-decoration: none;
+}
+
+.card-a {
+    text-decoration: none;
+    border: none;
+}
+
+.card-img {
+    width: 30rem;
+    border: none !important;
+}
+
+.slide-title {
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.slide-title-content {
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.dropdown-menu {
+    float: right;
+}
