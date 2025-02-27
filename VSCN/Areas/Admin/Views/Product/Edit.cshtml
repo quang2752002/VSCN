@@ -1,0 +1,273 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .ck-editor__editable {
+        min-height: 400px; /* Giới hạn chiều cao của CKEditor */
+        max-height: 500px;
+        box-sizing: border-box;
+    }
+
+    .ck-editor {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    textarea.ckeditor {
+        width: 100% !important;
+    }
+
+    /* Đảm bảo các trường khác không bị ẩn */
+    .input-group, .form-check {
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">Chỉnh Sửa Bài Viết</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <!-- Name -->
+            <div class="col-md-12 p-2">
+                <div class="input-group">
+                    <label class="input-group-text" for="name">Tên Bài Viết</label>
+                    <textarea type="text" class="form-control" rows="4" id="name" placeholder="Nhập tên bài viết"></textarea>
+                    <input type="number" class="form-control" id="id" hidden />
+                </div>
+            </div>
+
+            <!-- Slug -->
+            <div class="col-md-12 p-2">
+                <div class="input-group">
+                    <label class="input-group-text" for="slug">Slug</label>
+                    <input type="text" class="form-control bg-white" id="slug" placeholder="Slug" readonly />
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="col-md-12 p-2">
+                <div class="input-group">
+                    <label class="input-group-text" for="parentId">Danh Mục </label>
+                    @Html.DropDownList("parentId", new SelectList(ViewBag.ListCategory, "Id", "Name"), "- Chọn Danh Mục  -", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <!-- TypeArticle -->
+            <div class="col-md-12 p-2">
+                <div class="input-group">
+                    <label class="input-group-text" for="typeArticle">Loại Bài Viết</label>
+                    <select class="form-control" id="typeArticle">
+                        <option value="service" selected>Dịch Vụ </option>
+                        <option value="article">Giới Thiệu </option>
+                    </select>
+                </div>
+            </div>
+
+          
+
+            <!-- Content -->
+            <div class="col-md-12 p-2">
+                <div class="input-group">
+                    <label class="input-group-text" for="content">Nội Dung</label>
+                    <textarea class="form-control ckeditor" id="content"></textarea>
+                </div>
+            </div>
+
+            <!-- Avatar -->
+            <div class="col-md-12 p-2">
+                <div class="input-group">
+                    <label class="input-group-text" for="img">Ảnh</label>
+                    <input type="file" class="form-control" id="imgFile" accept="image/*" />
+                    <input type="text" class="form-control" id="img" placeholder="Nhập URL ảnh" />
+                </div>
+                <div class="mt-2">
+                    <img id="previewImg" src="" alt="Ảnh xem trước" style="max-width: 200px; display: none; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" />
+                </div>
+            </div>
+
+
+            <!-- Active -->
+            <div class="col-md-12 p-2">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="active" />
+                    <label class="form-check-label" for="active">Hoạt Động</label>
+                </div>
+            </div>
+
+          
+
+            <!-- Buttons -->
+            <div class="form-group mt-3 text-end">
+                <button type="button" id="update" class="btn btn-primary">
+                    Lưu thay đổi
+                </button>
+                <a type="button" class="btn btn-secondary" href="/Admin/Article/Index">Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CKEditor CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+@section scripts {
+    <script>
+        var article = {
+            init: function () {
+                article.getProduct();
+                article.update();
+                article.initializeEditor();
+                $("#name").on("input", function () {
+                    var name = $(this).val();
+                    var slug = article.generateSlug(name);
+                    $("#slug").val(slug);
+                });
+                $("#img").on("input", function () {
+                    var imgUrl = $(this).val();
+                    if (imgUrl) {
+                        $("#previewImg").attr("src", imgUrl).show();
+                    } else {
+                        $("#previewImg").hide();
+                    }
+                });
+                $("#imgFile").on("change", function () {
+                    var file = this.files[0];
+                    if (file) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#previewImg").attr("src", e.target.result).show();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+            },
+            getProduct: function () {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'JSON',
+                    url: '/Admin/Product/getProduct',
+                    success: function (res) {
+                        if (res && res.data) {
+                            // Fill the form with the article data
+                            $("#id").val(res.data.id);
+                            $("#name").val(res.data.name);
+                            $("#slug").val(res.data.slug);
+                            $("#parentId").val(res.data.categoryId);
+
+                            $("#typeArticle").val(res.data.typeArticle.toLowerCase());
+
+                            $("#img").val(res.data.avatar);
+                            $("#previewImg").attr("src", res.data.avatar).show();
+
+                            $("#content").val(res.data.content);
+
+                            // Set the checkbox values
+                            $("#active").prop("checked", res.data.active);
+                          
+                        }
+                    },
+                    error: function () {
+                        _layout.showtoast("Đã xảy ra lỗi khi lấy thông tin bài viết.");
+                        
+                    }
+                });
+            },
+
+            update: function () {
+                $('#update').on('click', function () {
+                    var id = $('#id').val();
+                    var name = $('#name').val();
+                    var slug = $('#slug').val();
+                    var parentId = $('#parentId').val();
+                    var typeArticle = $('#typeArticle').val();
+                    var summary = $('#summary').val();
+                    var content = article.editor.getData();
+                    var active = $('#active').is(':checked');
+                    var isShow = $('#isShow').is(':checked');
+
+                    var formData = new FormData();
+                    formData.append('id', id);
+                    formData.append('name', name);
+                    formData.append('slug', slug);
+                    formData.append('parentId', parentId);
+                    formData.append('typeArticle', typeArticle);
+                    formData.append('summary', summary);
+                    formData.append('content', content);
+                    formData.append('active', active);
+                    formData.append('isShow', isShow);
+
+                    var imgFile = $('#imgFile')[0].files[0];
+                    if (imgFile) {
+                        formData.append('imgFile', imgFile);
+                    } else {
+                        formData.append('img', $('#img').val());
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        url: '/Admin/Article/Update',
+                        success: function (res) {
+                            _layout.showtoast("Bài viết đã được cập nhật thành công!");
+                            window.location.href = '/Admin/Product/Index';
+                        },
+                        error: function () {
+                            _layout.showtoast("Đã xảy ra lỗi khi cập nhật bài viết.");
+                        }
+                    });
+                });
+            },
+
+
+            initializeEditor: function () {
+                // Initialize CKEditor for all elements with the class 'ckeditor'
+                document.querySelectorAll('.ckeditor').forEach(function (textarea) {
+                    ClassicEditor
+                        .create(textarea, {
+                            toolbar: [
+                                'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote',
+                                'insertTable', 'mediaEmbed', 'imageUpload', 'code', 'undo', 'redo'
+                            ],
+                            image: {
+                                toolbar: ['imageStyle', 'imageTextAlternative', 'linkImage']
+                            },
+                            table: {
+                                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                            }
+                        })
+                        .then(function (editor) {
+                            article.editor = editor; // Store the editor instance globally for later use
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                });
+            },
+
+            generateSlug: function (name) {
+                return name
+                    .toLowerCase() // Convert to lowercase
+                    .normalize('NFD') // Normalize Unicode
+                    .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+                    .replace(/đ/g, 'd') // Replace 'đ' with 'd'
+                    .replace(/Đ/g, 'd') // Replace 'Đ' with 'd'
+                    .replace(/\s+/g, '-') // Replace spaces with hyphens
+                    .replace(/[^\w\-]+/g, '') // Remove non-word characters
+                    .replace(/--+/g, '-') // Replace multiple hyphens with one
+                    .replace(/^-+/, '') // Remove hyphen at the start
+                    .replace(/-+$/, ''); // Remove hyphen at the end
+            }
+        };
+
+        $(document).ready(function () {
+            article.init();
+        });
+    </script>
+}

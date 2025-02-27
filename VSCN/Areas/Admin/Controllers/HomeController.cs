@@ -3,7 +3,7 @@
 namespace VSCN.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class HomeController : BaseAdminController
+    public class HomeController : Controller
     {
         public IActionResult Index()
         {

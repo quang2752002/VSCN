@@ -8,7 +8,7 @@ using VSCN.Models.VIEW;
 namespace VSCN.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : BaseAdminController
+    public class CategoryController :Controller
     {
         public IActionResult Index()
         {

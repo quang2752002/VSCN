@@ -1,0 +1,272 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /* Ensure CKEditor takes full width */
+    .ck-editor__editable {
+        min-height: 600px; /* Adjust the height of the editor */
+        width: 100% !important; /* Ensure it takes 100% width */
+        box-sizing: border-box; /* Ensure padding is included in width calculation */
+    }
+
+    /* Ensure the CKEditor container itself takes full width */
+    .ck-editor {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Ensure the textarea inside CKEditor takes full width */
+    textarea.ckeditor {
+        width: 100% !important;
+    }
+</style>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-primary">Thêm Mới Bài Viết</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-md-9">
+                <!-- Name -->
+                <div class="col-md-12 p-2">
+                    <div class="input-group">
+                        <label class="input-group-text" for="name">Tên Bài Viết</label>
+                        <textarea type="text" class="form-control" rows="4" id="name" placeholder="Nhập tên bài viết"></textarea>
+                    </div>
+                </div>
+
+                <!-- Slug -->
+                <div class="col-md-12 p-2">
+                    <div class="input-group">
+                        <label class="input-group-text" for="slug">Slug</label>
+                        <input type="text" class="form-control bg-white" id="slug" placeholder="Slug" readonly />
+                    </div>
+                </div>
+
+
+
+
+
+
+                <!-- Content -->
+                <div class="col-md-12 p-2">
+                    <div class="input-group">
+                        <label class="input-group-text" for="content">Nội Dung</label>
+                        <textarea class="form-control ckeditor" id="content" placeholder="Nhập nội dung bài viết"></textarea>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+
+            <div class="col-md-3">
+                <!-- Category -->
+                <div class="col-md-12 p-2">
+                    <div class="input-group">
+                        <label class="input-group-text" for="parentId">Danh Mục </label>
+                        @Html.DropDownList("parentId",
+                                 new SelectList(ViewBag.ListCategory, "Id", "Name"),
+                                 "- Chọn Danh Mục  -",
+                                 new { @class = "form-control" })
+                    </div>
+                </div>
+
+
+                <!-- TypeArticle -->
+                <div class="col-md-12 p-2">
+                    <div class="input-group">
+                        <label class="input-group-text" for="typeArticle">Loại Bài Viết</label>
+                        <select class="form-control" id="typeArticle">
+                            <option value="service" selected>Dịch Vụ </option>
+                            <option value="article">Giới Thiệu </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Avatar -->
+                <div class="col-md-12 p-2">
+                    <div class="input-group">
+                        <label class="input-group-text" for="img">Ảnh</label>
+                        <input type="file" class="form-control" id="img" placeholder="Nhập URL ảnh" />
+                        <img id="imgPreview" src="" alt="Preview Image" style="max-width: 100%; margin-top: 10px; display: none;" />
+
+                    </div>
+                </div>
+
+
+                <!-- Active -->
+                <div class="col-md-12 p-2">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="active" checked />
+                        <label class="form-check-label" for="active">Hoạt Động</label>
+                    </div>
+                </div>
+
+            
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <!-- Buttons -->
+        <div class="form-group mt-3 text-center">
+            <button type="button" id="create" class="btn btn-primary">
+                Thêm mới
+            </button>
+            <a type="button" class="btn btn-secondary" href="/Admin/Product/Index">Quay lại</a>
+        </div>
+    </div>
+</div>
+
+<!-- CKEditor CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+@section scripts {
+    <script>
+        var article = {
+            init: function () {
+                article.create();
+                article.initializeEditor(); // Initialize CKEditor
+                // Update slug when name field changes in the create modal
+                $("#name").on("input", function () {
+                    var name = $(this).val();
+                    var slug = article.generateSlug(name);
+                    $("#slug").val(slug);
+                });
+                $('#img').on('change', function (e) {
+                    var file = e.target.files[0];
+                   if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        // Hiển thị ảnh preview
+                        $('#imgPreview').attr('src', event.target.result).show();
+                    };
+                    reader.readAsDataURL(file); // Đọc file dưới dạng Data URL
+                    }
+                 });
+
+
+            },
+
+            create: function () {
+                $('#create').on('click', function () {
+                    var name = $('#name').val();
+                    var slug = $('#slug').val();
+                    var parentId = $('#parentId').val();
+                    var typeArticle = $('#typeArticle').val();
+                    var summary = $('#summary').val();
+                    var content = article.editor.getData(); // Get CKEditor content using CKEditor 5 API
+                    var img = $('#img')[0].files[0]; // Get the selected image file from the input field
+
+
+                    var active = $('#active').is(':checked');
+                    var isShow = $('#isShow').is(':checked');
+
+                    var formData = new FormData();
+                    if (img) {
+                        formData.append('img', img); // Append the image file if selected
+                    }
+                    if(!name){
+                        _layout.showtoast("Vui lòng nhập tên bài viết.");
+                        return;
+                    }
+                    if (!parentId||parentId==="0") {
+                        _layout.showtoast("Vui lòng chọn danh mục .");
+                        return;
+                    }
+
+                    formData.append('name', name);
+                    formData.append('slug', slug);
+                    formData.append('parentId', parentId);
+                    formData.append('typeArticle', typeArticle);
+                    formData.append('content', content); // Send the CKEditor content
+                    formData.append('active', active);
+          
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        url: '/Admin/Product/Create/',
+                        success: function (res) {
+                            if(res.success){
+                                 _layout.showtoast(res.mess);
+                                  window.location.href = '/Admin/Product/Index'; // Redirect after success
+                            }
+                            else{
+                                _layout.showtoast(res.mess);
+                            }
+                           
+                        },
+                        error: function () {
+                            alert("Đã xảy ra lỗi khi tạo bài viết.");
+                        }
+                    });
+                });
+            },
+
+            initializeEditor: function () {
+                // Initialize CKEditor for all elements with the class 'ckeditor'
+                document.querySelectorAll('.ckeditor').forEach(function (textarea) {
+                    ClassicEditor
+                        .create(textarea, {
+                            toolbar: [
+                                'heading', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', // Font styling
+                                'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript', // Text styling
+                                'alignment', // Text alignment
+                                'bulletedList', 'numberedList', 'blockQuote', // Lists and quotes
+                                'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', // Tables
+                                'link', 'mediaEmbed', 'imageUpload', // Media
+                                'highlight', // Text highlight
+                                'code', 'codeBlock', // Code support
+                                'undo', 'redo' // Undo/redo
+                            ],
+                            image: {
+                                toolbar: ['imageStyle:full', 'imageStyle:side', 'imageTextAlternative', 'linkImage']
+                            },
+                            table: {
+                                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
+                            }
+                        })
+                        .then(function (editor) {
+                            article.editor = editor; // Store the editor instance globally for later use
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                });
+            },
+
+
+            generateSlug: function (name) {
+                return name
+                    .toLowerCase() // Chuyển tất cả thành chữ thường
+                    .normalize('NFD') // Chuẩn hóa Unicode
+                    .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu Unicode
+                    .replace(/đ/g, 'd') // Thay đ thành d
+                    .replace(/Đ/g, 'd') // Thay Đ thành d
+                    .replace(/\s+/g, '-') // Thay khoảng trắng bằng dấu gạch ngang
+                    .replace(/[^\w\-]+/g, '') // Loại bỏ ký tự không hợp lệ
+                    .replace(/\-\-+/g, '-') // Xóa dấu gạch ngang liên tiếp
+                    .trim(); // Loại bỏ khoảng trắng ở đầu và cuối chuỗi
+            },
+        };
+
+        article.init();
+
+    </script>
+}
+

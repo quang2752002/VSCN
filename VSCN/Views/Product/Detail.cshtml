@@ -3,19 +3,91 @@
 
 
 }
+<style>
+    /* Tăng kích thước và làm đậm chữ label */
+    label {
+        font-weight: bold;
+        font-size: 18px;
+    }
 
+    /* Làm mờ placeholder */
+    .form-control::placeholder, .form-select::placeholder {
+        color: #999; /* Màu xám nhạt */
+        opacity: 0.7; /* Độ mờ */
+    }
+
+    /* Tăng kích thước input, select, textarea */
+    .form-control, .form-select {
+        font-size: 18px;
+        height: 50px;
+    }
+
+    textarea.form-control {
+        height: 150px !important;
+        font-size: 18px;
+    }
+
+    #getProduct img {
+        max-width: 100%; /* Ảnh không vượt quá khung chứa */
+        height: auto; /* Giữ tỷ lệ khung hình */
+        display: block; /* Đảm bảo ảnh không bị lỗi hiển thị */
+        margin: 0 auto; /* Căn giữa ảnh nếu cần */
+    }
+
+    #getProduct {
+        width: 100%; /* Đảm bảo nội dung hiển thị đầy đủ */
+    }
+
+</style>
 <div class="row">
 </div>
 <div class="row" style="margin-left:15px !important">
     <div class="col-md-8 p-4 ">
-        <div class="row shadow-lg bg-white rounded">
-            <strong>♦ Máy móc, trang thiết bị hiện đại, hóa chất chuyên dụng</strong>
-            <p>
-                Để mang đến cho khách hàng những dịch vụ có chất lượng vượt trội, Dịch vụ vệ sinh KDC đã đầu tư mua sắm nhiều máy móc, trang thiết bị hiện đại và hóa chất tẩy rửa chuyên dụng.
-            </p>
-            <p>
-                Một số máy móc được công ty mua sắm bao gồm: máy hút bụi, máy thổi bụi, máy đánh bóng sàn, máy quét rác công nghiệp, máy phun áp lực, máy giặt thảm, quạt thổi,….
-            </p>
+        <div class="row shadow-lg bg-white rounded" >
+            <div id="getProduct" class="row">
+
+            </div>
+            <div class="row p-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Họ tên</label>
+                        <input class="form-control" placeholder="Họ tên" />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Số điện thoại</label>
+                        <input class="form-control" placeholder="Số điện thoại" />
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <label>Dịch vụ</label>
+                    
+                    @Html.DropDownList("parentId",
+                             new SelectList(ViewBag.ListProduct, "Id", "Name"),
+                             "- Chọn Dịch Vụ -",
+                             new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <label>Lời nhắn</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"></textarea>
+                        <label for="floatingTextarea2">Lời nhắn</label>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Tôi đã đọc và chấp nhận chính sách 
+                        </label>
+                    </div>
+                    <div class="row justify-content-center mt-5 mb-5">
+                        <button type="submit" class="btn btn-primary px-4 py-2" style="font-size:25px;width: 150px;">Gửi đi</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
         <div class="row mt-5">
             <h2>Có thể bạn quan tâm</h2>
@@ -28,20 +100,52 @@
                     Một số máy móc được công ty mua sắm bao gồm: máy hút bụi, máy thổi bụi, máy đánh bóng sàn, máy quét rác công nghiệp, máy phun áp lực, máy giặt thảm, quạt thổi,….
                 </p>
             </div>
-            <div class="row shadow-lg bg-white rounded mt-5">
-                <strong>♦ Máy móc, trang thiết bị hiện đại, hóa chất chuyên dụng</strong>
-                <p>
-                    Để mang đến cho khách hàng những dịch vụ có chất lượng vượt trội, Dịch vụ vệ sinh KDC đã đầu tư mua sắm nhiều máy móc, trang thiết bị hiện đại và hóa chất tẩy rửa chuyên dụng.
-                </p>
-                <p>
-                    Một số máy móc được công ty mua sắm bao gồm: máy hút bụi, máy thổi bụi, máy đánh bóng sàn, máy quét rác công nghiệp, máy phun áp lực, máy giặt thảm, quạt thổi,….
-                </p>
-            </div>
+           
         </div>
 
     </div>
-    <div class="col-md-3 ml-2 p-4 shadow-lg bg-white rounded" style="margin-left:15px !important">
-        <p>Ngày nay, cùng với sự phát triển của công nghệ thời 4.0, nhu cầu của mọi người ngày càng được...</p>
+    <div class="col-md-3 ml-2 " style="margin-left:15px !important">
+        <div class="row shadow-lg bg-white rounded  p-4">
+            Ngày nay, cùng với sự phát triển của công nghệ thời 4.0, nhu cầu của mọi người ngày càng được...
+       </div>
+        <div class="row shadow-lg bg-white rounded mt-5 p-4">
+            Ngày nay, cùng với sự phát triển của công nghệ thời 4.0, nhu cầu của mọi người ngày càng được...
+        </div>
     </div>
 </div>
 
+@section scripts {
+    <script>
+        var product = {
+            init: function () {              
+                product.getProduct();                          
+            },
+            getProduct: function () {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'JSON',
+                    url: '/Product/getProduct',
+                    success: function (res) {
+                        if ( res.data) {
+                            $('#getProduct').html(res.data.content);
+
+                        }
+                    },
+                    error: function () {
+                        _layout.showtoast("Đã xảy ra lỗi khi lấy thông tin bài viết.");
+
+                    }
+                });
+            },
+            order:function(){
+
+            }
+
+          
+        }
+
+
+        product.init();
+       
+    </script>
+}
