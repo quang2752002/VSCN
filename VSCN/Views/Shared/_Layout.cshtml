@@ -157,8 +157,8 @@
 
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-custom">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/">Dịch Vụ Vệ Sinh</a>
+                <div class="container-fluid" id="getMenu">
+                 @*    <a class="navbar-brand" href="/">Dịch Vụ Vệ Sinh</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -201,8 +201,8 @@
                             </a>
 
                         </form>
-                    </div>
-                </div>
+                    </div>*@
+                </div> 
             </nav>
 
             <!-- Main Content Body -->
@@ -243,15 +243,15 @@
                 <div class="col-md-3 fs-2">
                     <h2 style="font-size:25px">Thông tin chung</h2>
                     <span id="" class="pt-5">Dịch Vụ Vệ Sinh </span><br>
-                    <span id="" class="pt-5">Dịch Vụ Vệ Sinh </span><br>
-                    <span id="" class="pt-5 ">Dịch Vụ Vệ Sinh </span><br>
-
+                    <span id="" class="pt-5">Vệ Sinh Nhà Cửa – Căn Hộ </span><br>    
+                    <span id="" class="pt-5 ">Vệ Sinh Sự Kiện Đặc Biệt </span><br>
+                    <span id="" class="pt-5 ">Dịch Vụ vệ Sinh Văn Phòng </span><br>
                 </div>
                 <div class="col-md-3 fs-2">
-                    <h2 style="font-size:25px">Vệ sinh</h2>
-                    <span id="" class="pt-5">Dịch Vụ Giặt Thảm </span><br>
-                    <span id="" class="pt-5">Sinh </span><br>
-                    <span id="" class="pt-5 "> Sinh </span><br>
+                    <h2 style="font-size:25px">Dịch vụ</h2>
+                    <span id="" class="pt-5">Giặt Nệm Giặt Ghế Sofa </span><br>
+                   
+                    <span id="" class="pt-5 "> Dịch Vụ Giặt Rèm Cửa </span><br>
 
                 </div>
                 <div class="col-md-3 fs-2">
@@ -281,6 +281,7 @@
         var home = {
             init: function () {
                 home.getConfig();
+                home.getMenu();
             },
             getConfig: function () {
                 $.ajax({
@@ -305,8 +306,66 @@
                     },
                 });
             },
+            getMenu: function () {
+                $.ajax({
+                    url: "/Menu/ShowList/",
+                    method: "GET",
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        var html = `
+                        <a class="navbar-brand" href="/">Dịch Vụ Vệ Sinh</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link " aria-current="page" href="/">Trang Chủ</a>
+                            </li>
+                           
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Giặt Thảm
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown" style="float:left">
+                                    <li><a class="dropdown-item" href="#">Giặt Thảm Văn Phòng</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Giặt Thảm Gia Đình</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Dịch Vụ Khác</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Mẹo Làm Sạch</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Tuyển Dụng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Liên Hệ</a>
+                            </li>
+                        </ul>
+                        <form class="d-flex">
+                            <a class="me-2 rounded-5 text-white border-0 phone-link-menu" href="tel:"
+                               style="background-color:#f4643c; text-align: center; font-size: 25px; padding:5px;
+                                      text-decoration: none; display: inline-block; width: 200px;">
+                                <span id="phoneInfor-menu" class="fw-bold">0123456789</span>
+                            </a>
+
+                        </form>
+                    </div>`;
+                        console.log(html);
+                        $("#getMemu").html(html); // Đổ HTML vào phần tử có id getMemu
+                    }
+                });
+            },
+
+
         }
         home.init();
+        home.getMenu();
     </script>
 
     @RenderSection("scripts", required: false)

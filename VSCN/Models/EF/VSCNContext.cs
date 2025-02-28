@@ -17,6 +17,7 @@ namespace VSCN.Models.EF
         }
 
         public virtual DbSet<Admin> Admins { get; set; } = null!;
+        public virtual DbSet<Banner> Banners { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Information> Information { get; set; } = null!;
         public virtual DbSet<Menu> Menus { get; set; } = null!;
@@ -45,6 +46,11 @@ namespace VSCN.Models.EF
                 entity.Property(e => e.Phone).HasMaxLength(20);
 
                 entity.Property(e => e.Username).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Banner>(entity =>
+            {
+                entity.ToTable("Banner");
             });
 
             modelBuilder.Entity<Category>(entity =>

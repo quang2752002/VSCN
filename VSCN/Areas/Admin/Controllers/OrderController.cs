@@ -1,6 +1,7 @@
 ﻿using GUIs.Helper;
 using GUIs.Support;
 using Microsoft.AspNetCore.Mvc;
+using VSCN.Helper;
 using VSCN.Models.DAO;
 using VSCN.Models.VIEW;
 
@@ -13,22 +14,38 @@ namespace VSCN.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            CategoryDAO categoryDAO = new CategoryDAO();
+            ProductDAO productDAO = new ProductDAO();
             ViewBag.Pagesize = DataServices.Pagesize();
             ViewBag.Year = DataServices.Year();
             ViewBag.Month = DataServices.Months();
-            ViewBag.ListCategory = categoryDAO.getAll();
+            ViewBag.ListProduct = productDAO.GetList(Common.SERVICE);
             return View();
         }
         [HttpPost]
-        public JsonResult Showlist(string name = "", int categoryId = 0, int index = 1, int size = 10)
+        public JsonResult Showlist(string name = "", int productId = 0,bool active=true, int index = 1, int size = 10)
         {
             try
             {
-                ProductDAO produtDAO = new ProductDAO();
-                (int total, List<ProductVIEW> list) = produtDAO.Search(name, categoryId, index, size);
+                OrderDAO orderDAO = new OrderDAO();
+                (int total, List<OrderVIEW> list) = orderDAO.Search(name, productId,active, index, size);
                 string page = Support.InTrang(total, index, size);
                 return Json(new { data = list, page = page });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, mess = $"Lỗi: {ex.Message}" });
+            }
+        }
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            try
+            {
+                OrderDAO orderDAO = new OrderDAO();
+                var item = orderDAO.GetItem(id);
+                item.Trash = true;
+                orderDAO.InsertOrUpdate(item);
+                return Json(new { success = true, mess = "Xóa thành công" });
             }
             catch (Exception ex)
             {

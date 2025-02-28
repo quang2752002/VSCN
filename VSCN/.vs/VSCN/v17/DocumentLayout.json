@@ -3,20 +3,48 @@
   "WorkspaceRootPath": "D:\\Project\\VSVN\\VSCN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\views\\product\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:views\\product\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\controllers\\bannercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:controllers\\bannercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\controllers\\menucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:controllers\\menucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\models\\dao\\bannerdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:models\\dao\\bannerdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\models\\view\\bannerview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:models\\view\\bannerview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\models\\ef\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:models\\ef\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\models\\dao\\menudao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:models\\dao\\menudao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\areas\\admin\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:areas\\admin\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\areas\\admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:areas\\admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\areas\\admin\\views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:areas\\admin\\views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\areas\\admin\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:areas\\admin\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|d:\\project\\vsvn\\vscn\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3DF9F872-02BD-4CC6-A65D-7BEB936DC00E}|VSCN.csproj|solutionrelative:controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +54,149 @@
       "DocumentGroups": [
         {
           "DockedWidth": 307,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Views\\Category\\Index.cshtml",
-              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Category\\Index.cshtml",
-              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Views\\Category\\Index.cshtml",
-              "RelativeToolTip": "Areas\\Admin\\Views\\Category\\Index.cshtml",
-              "ViewState": "AgIAAH8AAAAAAAAAAAAAAGkAAABFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-27T03:00:00.191Z",
+              "Title": "BannerController.cs",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Controllers\\BannerController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BannerController.cs",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Controllers\\BannerController.cs",
+              "RelativeToolTip": "Controllers\\BannerController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-28T02:46:12.848Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Detail.cshtml",
-              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Views\\Product\\Detail.cshtml",
-              "RelativeDocumentMoniker": "Views\\Product\\Detail.cshtml",
-              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Views\\Product\\Detail.cshtml",
-              "RelativeToolTip": "Views\\Product\\Detail.cshtml",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-27T02:59:52.734Z",
+              "DocumentIndex": 4,
+              "Title": "BannerVIEW.cs",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Models\\VIEW\\BannerVIEW.cs",
+              "RelativeDocumentMoniker": "Models\\VIEW\\BannerVIEW.cs",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Models\\VIEW\\BannerVIEW.cs",
+              "RelativeToolTip": "Models\\VIEW\\BannerVIEW.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-28T02:44:06.902Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ProductController.cs",
-              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Controllers\\ProductController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ProductController.cs",
-              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Controllers\\ProductController.cs",
-              "RelativeToolTip": "Controllers\\ProductController.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACIAAAAZAAAAAAAAAA==",
+              "Title": "BannerDAO.cs",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Models\\DAO\\BannerDAO.cs",
+              "RelativeDocumentMoniker": "Models\\DAO\\BannerDAO.cs",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Models\\DAO\\BannerDAO.cs",
+              "RelativeToolTip": "Models\\DAO\\BannerDAO.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-27T02:58:46.301Z",
+              "WhenOpened": "2025-02-28T02:43:29.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Banner.cs",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Models\\EF\\Banner.cs",
+              "RelativeDocumentMoniker": "Models\\EF\\Banner.cs",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Models\\EF\\Banner.cs",
+              "RelativeToolTip": "Models\\EF\\Banner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-28T02:43:15.594Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "CategoryController.cs",
-              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Controllers\\CategoryController.cs",
-              "RelativeDocumentMoniker": "Areas\\Admin\\Controllers\\CategoryController.cs",
-              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Controllers\\CategoryController.cs",
-              "RelativeToolTip": "Areas\\Admin\\Controllers\\CategoryController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAArAAAAAAAAAA==",
+              "Title": "MenuController.cs",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Controllers\\MenuController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MenuController.cs",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Controllers\\MenuController.cs",
+              "RelativeToolTip": "Controllers\\MenuController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-27T02:58:34.253Z",
+              "WhenOpened": "2025-02-28T02:24:54.549Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAEsAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-28T02:37:47.794Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MenuDAO.cs",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Models\\DAO\\MenuDAO.cs",
+              "RelativeDocumentMoniker": "Models\\DAO\\MenuDAO.cs",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Models\\DAO\\MenuDAO.cs",
+              "RelativeToolTip": "Models\\DAO\\MenuDAO.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAADcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-28T02:43:20.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAGYBAAAAAAAAAAAAAG8BAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-28T02:22:17.143Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Views\\Product\\Index.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Product\\Index.cshtml",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Views\\Product\\Index.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Product\\Index.cshtml",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAAAIcAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-28T02:21:54.683Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Views\\Order\\Index.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Order\\Index.cshtml",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Views\\Order\\Index.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Order\\Index.cshtml",
+              "ViewState": "AgIAAJoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-28T02:21:19.951Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Views\\Category\\Index.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Category\\Index.cshtml",
+              "ToolTip": "D:\\Project\\VSVN\\VSCN\\Areas\\Admin\\Views\\Category\\Index.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Category\\Index.cshtml",
+              "ViewState": "AgIAAIkBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-28T02:21:07.234Z",
               "EditorCaption": ""
             }
           ]

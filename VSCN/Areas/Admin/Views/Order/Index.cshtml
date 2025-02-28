@@ -1,5 +1,217 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .wrap-text {
+        white-space: normal;
+        /* Cho phép xuống dòng */
+        word-break: break-word;
+        /* Ngắt từ khi cần thiết */
+        max-width: 250px;
+        /* Giới hạn chiều rộng cột */
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        /* Tạo thanh cuộn ngang */
+    }
+
+    .table td,
+    .table th {
+        vertical-align: middle;
+        /* Canh giữa nội dung */
+        padding: 8px;
+        /* Thêm khoảng cách giữa các ô */
+    }
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h5 class="m-0 font-weight-bold text-primary">Danh Sách Đặt Dịch Vụ  </h5>
+            </div>
+            <div class="card-body">
+                <div class="row p-2">
+                    <div class="col-md-3">
+                        <a href="/Admin/Order/Create" class="btn btn-primary">Thêm Mới</a>
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DropDownList("Pagesize",
+                                 new SelectList(ViewBag.Pagesize, "ID", "ID"),
+                                 "Chọn số bản ghi", // This will set the default value
+                                 new { @class = "form-control" }
+                                 )
+                    </div>
+                    <div class="col-md-2">
+                        @Html.DropDownList("ListProduct",
+                                 new SelectList(ViewBag.ListProduct, "Id", "Name"),
+                                 "Chọn Dịch vụ ", // This will set the default value
+                                 new { @class = "form-control" }
+                                 )
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="check-active" checked>
+                              <label class="form-check-label" for="flexCheckChecked">
+                               Trạng Thái
+                              </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>TT</th>
+
+                                <th>Họ tên </th>
+                                <th>SDT </th>
+                                <th>Dịch vụ </th>
+                                <th>Trạng thái</th>
+                                <th>Hoạt Động</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tbData"></tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="100" id="pages"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+@section scripts {
+    <script>
+        var product = {
+            init: function () {
+                product.search(1);
+                $("#search, #Pagesize,#ListProduct,#check-active").change(function () {
+                    product.search(1);
+                });
+
+                $("#name").on("input", function () {
+                    var name = $(this).val();
+                    var slug = product.generateSlug(name);
+                    $("#slug").val(slug);
+                });
+                
+            },
+
+
+
+
+            search: function (index) {
+                var name = $("#search").val();
+                var size = $("#Pagesize").val();
+                var productId = $("#ListProduct").val();
+                var active = $("#check-active").prop("checked");
+
+                var form = new FormData();
+
+                form.append("name", name);
+                form.append("size", size);
+                form.append("index", index);
+                form.append("productId", productId);
+                form.append("active", active);
+
+                $("#loading").show();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    data: form,
+                    url: '/Admin/Order/ShowList/',
+                    success: function (res) {
+                        var html = "";
+                        $.each(res.data, function (index, a) {
+
+
+                            html += "<tr>";
+                            html += "<td>" + a.id + "</td>";
+                            html += "<td><a href='javascript:void(0)' onclick='product.getDanhMuc(" + a.id + ")'>" + a.name + "</a></td>";
+                            html += "<td>" + a.phone + "</td>";
+                            html += "<td>" + a.productName + "</td>";
+
+                            html += "<td>" + (a.active ? "<i style='color:green' class='fa-solid fa-check'></i>" : "<i style='color:red' class='fa-solid fa-xmark'></i>") + "</td>";
+
+                            html += "<td>";
+                            html+="<a href='javascript:void(0)' onclick='product.delete(" + a.id + ")'><i class='fa fa-trash' style='color:red'></i></a></td>"
+
+                            html += "</tr>";
+                            $.each(a.subCategory, function (i, b) {
+
+
+                                html += "<tr>";
+                                html += "<td>" + b.id + "</td>";
+                                html += "<td><a href='javascript:void(0)' onclick='product.getDanhMuc(" + b.id + ")'>---" + b.name + "</a></td>";
+                                html += "<td>" + b.slug + "</td>";
+
+                                html += "<td>" + (b.active ? "<i style='color:green' class='fa-solid fa-check'></i>" : "<i style='color:red' class='fa-solid fa-xmark'></i>") + "</td>";
+
+                                html += "<td><a href='javascript:void(0)' onclick='product.delete(" + b.id + ")'><i class='fa fa-trash' style='color:red'></i></a></td>";
+                                html += "</tr>";
+
+                            });
+
+                        });
+                        $("#tbData").html(html);
+                        $("#pages").html(res.page);
+                    },
+                });
+            },
+
+
+            delete: function (id) {
+                // Show a confirmation dialog
+                if (confirm("Bạn có chắc chắn muốn xóa mục này không?")) {
+                    var form = new FormData();
+                    form.append("id", id);
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        data: form,
+                        url: '/Admin/Order/Delete/',
+                        success: function (res) {
+                            if (res.success) {
+                                _layout.showtoast(res.mess);
+                                product.search(1);
+                            } else {
+                                _layout.showtoast(res.mess);
+
+                            }
+                        },
+                        error: function () {
+                            _layout.showtoast("Đã xảy ra lỗi trong khi xóa danh mục.");
+                           
+                        }
+                    });
+                }
+            },
+
+        }
+
+
+        product.init();
+        function goto(i) {
+            product.search(i);
+        }
+    </script>
 }

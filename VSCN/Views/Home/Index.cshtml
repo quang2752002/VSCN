@@ -51,8 +51,8 @@
 
 
 </style>
-<div class="row">
-    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+<div class="row mt-5 mb-5" id="getSlide" >
+   @*  <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
                     aria-current="true" aria-label="Slide 1"> </button>
@@ -61,7 +61,7 @@
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
                     aria-label="Slide 3"></button>
         </div>
-        <div class="carousel-inner" id="getSlide">
+        <div class="carousel-inner" >
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
                 data-bs-slide="prev">
@@ -73,7 +73,7 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
-    </div>
+    </div> *@
 </div>
 
 
@@ -188,15 +188,21 @@
                         var html = "";
                         $.each(res.data, function (index, a) {
                             html += `
-                                   <a class="carousel-item ${index === 0 ? "active" : ""}" data-bs-interval="3000"  href='#'>
-                                           <img src="https://dichvuvesinhkdc.com/wp-content/uploads/2023/10/Ve_sinh_cong_nghiep_Thanh_Tri.jpg" class="d-block w-100" />
-
-                                    </a>`;
+                            <div class="carousel-item ${index === 0 ? "active" : ""}" data-bs-interval="3000">
+                                <img src="${a.imageUrl}"
+                                     class="d-block w-100"
+                                             onerror="this.onerror=null;this.src='https://dichvuvesinhkdc.com/wp-content/uploads/2023/10/banner-web-29_9_2021.jpg';" />
+                            </div>`;
                         });
                         $("#getSlide").html(html);
                     },
+                    error: function () {
+                        console.error("Error fetching slides.");
+                        $("#getSlide").html("<p>Không thể tải ảnh slide.</p>");
+                    }
                 });
             },
+
             getConfig: function () {
                 $.ajax({
                     url: "/Information/getInfor/",
@@ -213,7 +219,7 @@
                     method: "GET",
                     dataType: "json",
                     success: function (res) {
-                        console.log(res.data); 
+                       
                         if (res.data) {
                             var html = "";
                             $.each(res.data, function (index, product) {
@@ -265,7 +271,64 @@
                     },
                 });
             },
+                     getSlide: function () {
+            $.ajax({
+                url: "/Banner/ShowList/",
+        method: "GET",
+                dataType: "json",
+        success: function (res) {
+                console.log(res.data);
+                    if (res.data && res.data.length > 0) {
+                        var indicators = "";
+                        var slides = "";
 
+                        $.each(res.data, function (index, banner) {
+                            // Tạo indicators
+                    indicators += `
+                        <button type="button" data-bs-target="#carouselExampleDark"
+                            data-bs-slide-to="${index}" ${index === 0 ? 'class="active"' : ""}
+                            aria-label="Slide ${index + 1}">
+                        </button>`;
+
+                            // Tạo slide
+                    slides += `
+                                <div class="carousel-item ${index === 0 ? "active" : ""}" data-bs-interval="3000">
+                                <img src="${banner.avatar}" class="d-block w-100" >
+                                </div>`;
+                        });
+
+                        // Tạo HTML cho carousel
+                        var html = `
+                            <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">${indicators}</div>
+                                <div class="carousel-inner">${slides}</div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>`;
+
+                        // Gán HTML vào div có id="getSlide"
+                        $("#getSlide").html(html);
+                    } else {
+                        $("#getSlide").html("<p>No slides found.</p>");
+                    }
+                },
+                error: function (err) {
+                    console.error("Error fetching Slide:", err);
+                    $("#getSlide").html("<p>Failed to load slides.</p>");
+                }
+            });
+        },
+
+
+           
 
 
         };

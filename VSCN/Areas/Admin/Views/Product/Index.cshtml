@@ -141,13 +141,13 @@
 
                             html += "<tr>";
                             html += "<td>" + a.id + "</td>";
-                            html += "<td><a href='javascript:void(0)' onclick='product.getDanhMuc(" + a.id + ")'>" + a.name + "</a></td>";
+                            html += "<td><a href='/Admin/Product/Edit/"+a.slug+"'>" + a.name + "</a></td>";
                             html += "<td>" + a.slug + "</td>";
                             html += "<td>" + a.typeArticle + "</td>";
 
                             html += "<td>" + (a.active ? "<i style='color:green' class='fa-solid fa-check'></i>" : "<i style='color:red' class='fa-solid fa-xmark'></i>") + "</td>";
                          
-                            html += "<td><a href='/Admin/Product/Edit/"+a.slug+"'><i class='fa-solid fa-eye'></i></a>";
+                            html += "<td>";
                             html+="<a href='javascript:void(0)' onclick='product.delete(" + a.id + ")'><i class='fa fa-trash' style='color:red'></i></a></td>"
                             
                             html += "</tr>";

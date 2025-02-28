@@ -39,8 +39,13 @@
     }
 
 </style>
-<div class="row">
+<div class="row d-flex align-items-center" style="background-color: #f0ecec; padding: 10px;">
+   
+    <span id="getName"> <i class="fa-solid fa-house me-2"></i><a href="/">Trang chủ</a>Tên</span>
 </div>
+
+
+
 <div class="row" style="margin-left:15px !important">
     <div class="col-md-8 p-4 ">
         <div class="row shadow-lg bg-white rounded" >
@@ -51,18 +56,18 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label>Họ tên</label>
-                        <input class="form-control" placeholder="Họ tên" />
+                        <input class="form-control" placeholder="Họ tên" id="hoten" />
                     </div>
                     <div class="col-md-6">
                         <label>Số điện thoại</label>
-                        <input class="form-control" placeholder="Số điện thoại" />
+                        <input class="form-control" placeholder="Số điện thoại" id="sdt" />
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <label>Dịch vụ</label>
                     
-                    @Html.DropDownList("parentId",
+                    @Html.DropDownList("service",
                              new SelectList(ViewBag.ListProduct, "Id", "Name"),
                              "- Chọn Dịch Vụ -",
                              new { @class = "form-control" })
@@ -71,8 +76,7 @@
                 <div class="col-md-12 mt-3">
                     <label>Lời nhắn</label>
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"></textarea>
-                        <label for="floatingTextarea2">Lời nhắn</label>
+                        <textarea class="form-control" placeholder="Leave a comment here" id="note"></textarea>
                     </div>
                 </div>
                 <div class="row mt-5">
@@ -83,7 +87,7 @@
                         </label>
                     </div>
                     <div class="row justify-content-center mt-5 mb-5">
-                        <button type="submit" class="btn btn-primary px-4 py-2" style="font-size:25px;width: 150px;">Gửi đi</button>
+                        <button type="submit" class="btn btn-primary px-4 py-2" style="font-size:25px;width: 150px;" id="order">Gửi đi</button>
                     </div>
 
                 </div>
@@ -113,12 +117,39 @@
         </div>
     </div>
 </div>
+<!-- Modal Notification Box -->
+<div id="notificationBox" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông Báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="cancelHidden">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="notificationMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="boxHidden">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts {
     <script>
         var product = {
             init: function () {              
-                product.getProduct();                          
+                product.getProduct();
+                $("#order").click(function () {
+                   
+                    product.order();
+
+                });
+                 $("#boxHidden,#cancelHidden").click(function () {
+                    $("#notificationBox").modal('hide');
+                });
             },
             getProduct: function () {
                 $.ajax({
@@ -128,7 +159,10 @@
                     success: function (res) {
                         if ( res.data) {
                             $('#getProduct').html(res.data.content);
-
+                             var html = "";
+                              
+                                html += "<a href='/' style='text-decoration:none;'><i class='fa-solid fa-house me-2'></i>Trang chủ/ </a>" + res.data.name;
+                            $('#getName').html(html);
                         }
                     },
                     error: function () {
@@ -138,9 +172,47 @@
                 });
             },
             order:function(){
-
+                var hoten = $("#hoten").val();
+                var sdt = $("#sdt").val();
+                var service = $("#service").val();
+                var note = $("#note").val();
+                if (!hoten) {
+                    product.showNotification("Vui lòng nhập họ tên");
+                    return;
+                }
+                 if (!sdt) {
+                    product.showNotification("Vui lòng nhập số điện thoại ");
+                    return;
+                }
+                var form = new FormData();
+                form.append("name", hoten);
+                form.append("sdt", sdt);
+                form.append("service", service);
+                form.append("note", note);
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    data: form,
+                    url: '/Product/Order/',
+                    success: function (res) {
+                        $("#hoten").val("");
+                        $("#sdt").val("");
+                        $("#service").val("").trigger("change"); // Nếu dùng Select2 thì cần trigger change
+                        $("#note").val("");
+                        _layout.showtoast(res.mess);
+                        
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi khi tạo sản phẩm.");
+                    }
+                });
+            },
+            showNotification: function (message) {
+                $("#notificationMessage").text(message); // Set the message inside the modal
+                $("#notificationBox").modal('show');    // Show the modal
             }
-
           
         }
 
